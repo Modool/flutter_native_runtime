@@ -9,17 +9,16 @@
 .history
 .svn/
 
-# blutter
-blutter_tools
-
 # IntelliJ related
 *.iml
 *.ipr
 *.iws
 .idea/
 
-# Visual Studio Code related
-.vscode/
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -28,10 +27,7 @@ blutter_tools
 .packages
 .pub-cache/
 .pub/
-.flutter-plugins-dependencies
-build/
-coverage/
-artifacts/
+/build/
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -41,7 +37,6 @@ artifacts/
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
-**/android/**/gen/
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -75,6 +70,3 @@ artifacts/
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-
-pubspec.lock
-!**/example/pubspec.lock

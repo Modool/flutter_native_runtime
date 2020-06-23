@@ -1,0 +1,1 @@
+-keep public class * extends com.modool.flutter_native_runtime.FlutterNativeRuntimePlugin { *; }
