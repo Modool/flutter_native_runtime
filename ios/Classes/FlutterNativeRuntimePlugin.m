@@ -35,11 +35,15 @@ static NSString * const FlutterNativeRuntimePluginMethodDispose = @"dispose";
     if (self = [super init]) {
         _cache = [NSMutableDictionary dictionary];
         _globalInstances = @{
+#if TARGET_OS_OSX
+            @"NSScreen": NSScreen.mainScreen,
+            @"NSApplication": NSApplication.sharedApplication,
+#else
             @"UIScreen": UIScreen.mainScreen,
             @"UIDevice": UIDevice.currentDevice,
             @"UIApplication": UIApplication.sharedApplication,
             @"UIMenuController": UIMenuController.sharedMenuController,
-
+#endif
             @"NSBundle": NSBundle.mainBundle,
             @"NSProcessInfo": ^id (void) {
                 return NSProcessInfo.processInfo;
