@@ -3,15 +3,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_native_runtime/flutter_native_runtime.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   final nativeRuntime = NativeRuntime();
-  const channel = MethodChannel('flutter_native_runtime');
+  const channel =
+      MethodChannel('com.modool.flutter/plugins/flutter_native_runtime');
 
   final log = <MethodCall>[];
 
   channel.setMockMethodCallHandler((methodCall) async {
     log.add(methodCall);
 
-    if (methodCall.method == '_dispose' || methodCall.method == '_keep') {
+    if (methodCall.method == 'dispose' || methodCall.method == 'keep') {
       return null;
     }
 
@@ -40,7 +43,7 @@ void main() {
     expect(await target.keep(), true);
 
     final call = log.first;
-    expect(call.method, '_keep');
+    expect(call.method, 'keep');
     expect(call.arguments['n'], 'test');
     expect(call.arguments['t'], 1);
     expect(call.arguments['id'], target.id);
@@ -48,7 +51,7 @@ void main() {
     expect(await target.dispose(), true);
 
     final call2 = log[1];
-    expect(call2.method, '_dispose');
+    expect(call2.method, 'dispose');
     expect(call2.arguments, target.id);
 
     expect(await target.dispose(), false);
@@ -69,7 +72,7 @@ void main() {
         .get<String>();
 
     final call = log.first;
-    expect(call.method, '_invoke');
+    expect(call.method, 'invoke');
     expect(call.arguments['n'], 'property');
     expect(call.arguments['t'], 3);
     expect(call.arguments['id'], isNotNull);
@@ -89,7 +92,7 @@ void main() {
         .get<String>();
 
     final call = log.first;
-    expect(call.method, '_invoke');
+    expect(call.method, 'invoke');
     expect(call.arguments['n'], 'property2');
     expect(call.arguments['t'], 3);
     expect(call.arguments['id'], isNotNull);
@@ -109,7 +112,7 @@ void main() {
     await nativeRuntime.classNamed('test').property('property').set('aa');
 
     final call = log.first;
-    expect(call.method, '_invoke');
+    expect(call.method, 'invoke');
 
     expect(call.arguments['a'], ['aa']);
     expect(call.arguments['n'], 'property');
@@ -129,7 +132,7 @@ void main() {
         .set('aa');
 
     final call = log.first;
-    expect(call.method, '_invoke');
+    expect(call.method, 'invoke');
 
     expect(call.arguments['a'], ['aa']);
     expect(call.arguments['n'], 'property2');
@@ -151,7 +154,7 @@ void main() {
         .method('method', arguments: ['aa']).invoke();
 
     final call = log.first;
-    expect(call.method, '_invoke');
+    expect(call.method, 'invoke');
 
     expect(call.arguments['a'], ['aa']);
     expect(call.arguments['n'], 'method');
@@ -171,7 +174,7 @@ void main() {
         arguments: ['aa']).method('method2', arguments: ['bb']).invoke();
 
     final call = log.first;
-    expect(call.method, '_invoke');
+    expect(call.method, 'invoke');
 
     expect(call.arguments['a'], ['bb']);
     expect(call.arguments['n'], 'method2');
@@ -199,7 +202,7 @@ void main() {
         .method('method2', arguments: ['bb']).invoke();
 
     final call = log.first;
-    expect(call.method, '_invoke');
+    expect(call.method, 'invoke');
 
     expect(call.arguments['a'], ['bb']);
     expect(call.arguments['n'], 'method2');
@@ -224,7 +227,7 @@ void main() {
         arguments: ['aa']).method('method2', arguments: ['bb']).invoke();
 
     final call = log.first;
-    expect(call.method, '_invoke');
+    expect(call.method, 'invoke');
 
     expect(call.arguments['a'], ['bb']);
     expect(call.arguments['n'], 'method2');
@@ -250,7 +253,7 @@ void main() {
         .get();
 
     final call = log.first;
-    expect(call.method, '_invoke');
+    expect(call.method, 'invoke');
 
     expect(call.arguments['n'], 'variable');
     expect(call.arguments['t'], 4);
@@ -270,7 +273,7 @@ void main() {
         .set('aa');
 
     final call = log.first;
-    expect(call.method, '_invoke');
+    expect(call.method, 'invoke');
 
     expect(call.arguments['a'], ['aa']);
     expect(call.arguments['n'], 'variable');
